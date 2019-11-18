@@ -1,8 +1,8 @@
 <?php
 namespace Drahak\Restful\Mapping;
 
-use Nette\Object;
 use Nette\Http\Url;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 
 /**
@@ -10,8 +10,9 @@ use Nette\Utils\Strings;
  * @package Drahak\Restful\Mapping
  * @author Drahomír Hanák
  */
-class QueryMapper extends Object implements IMapper
+class QueryMapper implements IMapper
 {
+	use SmartObject;
 
 	/**
 	 * Convert array or Traversable input to string output response

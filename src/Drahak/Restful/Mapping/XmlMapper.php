@@ -2,9 +2,9 @@
 namespace Drahak\Restful\Mapping;
 
 use DOMDocument;
+use Nette\SmartObject;
 use Traversable;
 use SimpleXMLElement;
-use Nette\Object;
 use Nette\Utils\Json;
 use Nette\Utils\Arrays;
 use Nette\Utils\JsonException;
@@ -17,8 +17,9 @@ use Drahak\Restful\InvalidArgumentException;
  *
  * @property string|NULL $rootElement
  */
-class XmlMapper extends Object implements IMapper
+class XmlMapper implements IMapper
 {
+	use SmartObject;
 
 	/** @internal */
 	const ITEM_ELEMENT = 'item';
@@ -95,7 +96,7 @@ class XmlMapper extends Object implements IMapper
 	 * Parse XML to array
 	 * @param string $data
 	 * @return array
-	 * 
+	 *
 	 * @throws  MappingException If XML data is not valid
 	 */
 	public function parse($data)
@@ -130,8 +131,8 @@ class XmlMapper extends Object implements IMapper
 
 	/**
 	 * Normalize data structure to accepted form
-	 * @param  array|* $value 
-	 * @return array        
+	 * @param  array|* $value
+	 * @return array
 	 */
 	private function normalize($value)
 	{

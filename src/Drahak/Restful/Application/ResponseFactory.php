@@ -8,19 +8,20 @@ use Drahak\Restful\InvalidStateException;
 use Drahak\Restful\IResource;
 use Drahak\Restful\Mapping\MapperContext;
 use Drahak\Restful\Utils\RequestFilter;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 use Nette\Http\IResponse;
 use Nette\Http\IRequest;
 use Nette\Http\Url;
-use Nette\Object;
 
 /**
  * REST ResponseFactory
  * @package Drahak\Restful
  * @author Drahomír Hanák
  */
-class ResponseFactory extends Object implements IResponseFactory
+class ResponseFactory implements IResponseFactory
 {
+	use SmartObject;
 
 	/** @var IResponse */
 	private $response;
@@ -39,7 +40,7 @@ class ResponseFactory extends Object implements IResponseFactory
 
 	/** @var string pretty print key */
 	private $prettyPrintKey = 'prettyPrint';
-        
+
         /** @var boolean */
         private $prettyPrint = TRUE;
 
@@ -67,7 +68,7 @@ class ResponseFactory extends Object implements IResponseFactory
 
 	/**
 	 * Set JSONP key
-	 * @param string $jsonp 
+	 * @param string $jsonp
 	 */
 	public function setJsonp($jsonp)
 	{
@@ -86,17 +87,17 @@ class ResponseFactory extends Object implements IResponseFactory
 
 	/**
 	 * Set pretty print key
-	 * @param string $prettyPrintKey 
+	 * @param string $prettyPrintKey
 	 */
 	public function setPrettyPrintKey($prettyPrintKey)
 	{
 		$this->prettyPrintKey = $prettyPrintKey;
 		return $this;
 	}
-        
+
         /**
 	 * Set pretty print
-	 * @param string $prettyPrint 
+	 * @param string $prettyPrint
 	 */
 	public function setPrettyPrint($prettyPrint)
 	{
@@ -181,8 +182,8 @@ class ResponseFactory extends Object implements IResponseFactory
 
 	/**
 	 * Is given content type acceptable for response
-	 * @param  string  $contentType 
-	 * @return boolean              
+	 * @param  string  $contentType
+	 * @return boolean
 	 */
 	public function isAcceptable($contentType)
 	{
@@ -196,8 +197,8 @@ class ResponseFactory extends Object implements IResponseFactory
 
 	/**
 	 * Is pretty print enabled
-	 * @param  IRequest $request 
-	 * @return boolean           
+	 * @param  IRequest $request
+	 * @return boolean
 	 */
 	protected function isPrettyPrint()
 	{
@@ -215,7 +216,7 @@ class ResponseFactory extends Object implements IResponseFactory
 	 * Get preferred request content type
 	 * @param  string $contentType may be separed with comma
 	 * @return string
-	 * 
+	 *
 	 * @throws  InvalidStateException If Accept header is unknown
 	 */
 	protected function getPreferredContentType($contentType)

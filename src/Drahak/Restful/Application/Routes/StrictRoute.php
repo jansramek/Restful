@@ -1,23 +1,24 @@
 <?php
 namespace Drahak\Restful\Application\Routes;
 
-use Nette\Object;
 use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
 use Nette\Http;
 use Nette\Http\Url;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 use Nette\Application;
 use Drahak\Restful\Application\IResourceRouter;
 
 /**
- * API strict route 
+ * API strict route
  * - forces URL in form <prefix>/<presenter>[/<relation>[/<relationId>[/<relation>...]]]
  * - contrtructs app request to <Module>:<Presenter>:read<Relation[0]><Relation[1]>(<RelationId[0]>, <RelationId[1]>, ...)
  * @author Drahomír Hanák
  */
-class StrictRoute extends Object implements IRouter
+class StrictRoute implements IRouter
 {
+	use SmartObject;
 
 	/** @var string */
 	protected $prefix;
@@ -37,7 +38,7 @@ class StrictRoute extends Object implements IRouter
 	);
 
 	/**
-	 * @param  string $prefix 
+	 * @param  string $prefix
 	 * @param  stirng $module
 	 */
 	public function __construct($prefix = '', $module = NULL)
@@ -45,11 +46,11 @@ class StrictRoute extends Object implements IRouter
 		$this->prefix = $prefix;
 		$this->module = $module;
 	}
-	
+
 	/**
 	 * Match request
-	 * @param  IRequest $request 
-	 * @return Request            
+	 * @param  IRequest $request
+	 * @return Request
 	 */
 	public function match(Http\IRequest $request)
 	{
@@ -73,7 +74,7 @@ class StrictRoute extends Object implements IRouter
 		$appRequest = new Application\Request($presenter, $request->getMethod(), $params, $request->getPost(), $request->getFiles());
 		return $appRequest;
 	}
-	
+
 	public function constructUrl(Application\Request $request, Url $refUrl)
 	{
 		return NULL;
@@ -81,8 +82,8 @@ class StrictRoute extends Object implements IRouter
 
 	/**
 	 * Get path parameters
-	 * @param  array $arguments 
-	 * @return array            
+	 * @param  array $arguments
+	 * @return array
 	 */
 	private function getPathParameters($arguments)
 	{
@@ -94,9 +95,9 @@ class StrictRoute extends Object implements IRouter
 	}
 
 	/**
-	 * Get action name 
-	 * @param  string $method   
-	 * @param  array $arguments 
+	 * Get action name
+	 * @param  string $method
+	 * @param  array $arguments
 	 * @return string
 	 */
 	private function getActionName($method, $arguments)

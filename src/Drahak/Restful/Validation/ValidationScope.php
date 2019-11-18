@@ -1,7 +1,7 @@
 <?php
 namespace Drahak\Restful\Validation;
 
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Utils\Validators;
 use Nette\Utils\Strings;
 
@@ -12,8 +12,9 @@ use Nette\Utils\Strings;
  *
  * @property-read IValidator $validator
  */
-class ValidationScope extends Object implements IValidationScope
+class ValidationScope implements IValidationScope
 {
+	use SmartObject;
 
 	/** @var IValidator */
 	private $validator;
@@ -72,8 +73,8 @@ class ValidationScope extends Object implements IValidationScope
 
 	/**
 	 * Recursively validate data using dot notation
-	 * @param  IField $field 
-	 * @param  array  $data 
+	 * @param  IField $field
+	 * @param  array  $data
 	 * @param  string $path
 	 * @return array
 	 */
@@ -81,7 +82,7 @@ class ValidationScope extends Object implements IValidationScope
 	{
 		$errors = array();
 
-        if (Validators::isList($data) && count($data)) { 
+        if (Validators::isList($data) && count($data)) {
             foreach ($data as $item) {
                 $newErrors = $this->validateDeeply($field, $item, $path);
                 $errors = array_merge($errors, $newErrors);
@@ -100,9 +101,9 @@ class ValidationScope extends Object implements IValidationScope
 					break; // because recursion already handled this path validation
 				} else if ($isLast || $value === NULL) {
 					$newErrors = $field->validate($value);
-					$errors = array_merge($errors, $newErrors);  
+					$errors = array_merge($errors, $newErrors);
 					break;
-				} 
+				}
 			}
         }
 

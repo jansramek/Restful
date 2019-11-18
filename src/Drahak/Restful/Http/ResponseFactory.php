@@ -8,7 +8,7 @@ use Nette\Http\IResponse;
 use Nette\Http\IRequest;
 use Nette\Http\Response;
 use Nette\Http\Url;
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Utils\Paginator;
 
 /**
@@ -16,8 +16,9 @@ use Nette\Utils\Paginator;
  * @package Drahak\Restful\Http
  * @author Drahomír Hanák
  */
-class ResponseFactory extends Object
+class ResponseFactory
 {
+	use SmartObject;
 
 	/** @var IRequest */
 	private $request;
@@ -68,7 +69,7 @@ class ResponseFactory extends Object
 	{
 		$response = $this->response ? $this->response : new Response();
 		$response->setCode($this->getCode($code));
-	
+
 		try {
 			$response->setHeader('Link', $this->getPaginatorLink());
 			$response->setHeader('X-Total-Count',$this->getPaginatorTotalCount());

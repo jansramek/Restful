@@ -116,8 +116,7 @@ class RestfulExtension extends CompilerExtension
 		$container->addDefinition($this->prefix('responseFactory'))
 			->setClass('Drahak\Restful\Application\ResponseFactory')
 			->addSetup('$service->setJsonp(?)', array($config['jsonpKey']))
-			->addSetup('$service->setPrettyPrintKey(?)', array($config['prettyPrintKey']))
-			->addSetup('$service->setPrettyPrint(?)', array($config['prettyPrint']));
+			->addSetup('$service->setPrettyPrintKey(?)', array($config['prettyPrintKey']));
 
 		$container->addDefinition($this->prefix('resourceFactory'))
 			->setClass('Drahak\Restful\ResourceFactory');
@@ -212,7 +211,7 @@ class RestfulExtension extends CompilerExtension
 	 */
 	private function loadResourceConverters(ContainerBuilder $container, $config)
 	{
-		Validators::assert($config['timeFormat'], 'string');
+		//Validators::assert($config['timeFormat'], 'string');
 
 		// Default used converters
 		$container->addDefinition($this->prefix('objectConverter'))
@@ -220,7 +219,6 @@ class RestfulExtension extends CompilerExtension
 			->addTag(self::CONVERTER_TAG);
 		$container->addDefinition($this->prefix('dateTimeConverter'))
 			->setClass('Drahak\Restful\Converters\DateTimeConverter')
-			->setArguments(array($config['timeFormat']))
 			->addTag(self::CONVERTER_TAG);
 
 		// Other available converters
