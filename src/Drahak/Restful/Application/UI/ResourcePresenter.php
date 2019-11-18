@@ -127,7 +127,7 @@ abstract class ResourcePresenter extends UI\Presenter implements IResourcePresen
 	 * Check security and other presenter requirements
 	 * @param $element
 	 */
-	public function checkRequirements($element)
+	public function checkRequirements($element): void
 	{
 		try {
 			parent::checkRequirements($element);
@@ -234,7 +234,7 @@ abstract class ResourcePresenter extends UI\Presenter implements IResourcePresen
 	 * @param string $rel
 	 * @return Link
 	 */
-	public function link($destination, $args = array(), $rel = Link::SELF)
+	public function link(string $destination, $args = array(), $rel = Link::SELF): string
 	{
 		$href = parent::link($destination, $args);
 		return new Link($href, $rel);
