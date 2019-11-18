@@ -4,12 +4,13 @@ namespace Drahak\Restful\Http;
 use Nette\Http\RequestFactory;
 use Nette\Http\Request;
 use Nette\Http\IRequest;
+use Nette\Http\UrlScript;
 
 /**
  * Api request factory
  * @author Drahomír Hanák
  */
-class ApiRequestFactory 
+class ApiRequestFactory
 {
 
 	const OVERRIDE_HEADER = 'X-HTTP-Method-Override';
@@ -21,7 +22,7 @@ class ApiRequestFactory
 	private $factory;
 
 	/**
-	 * @param RequestFactory $factory 
+	 * @param RequestFactory $factory
 	 */
 	public function __construct(RequestFactory $factory)
 	{
@@ -29,26 +30,24 @@ class ApiRequestFactory
 	}
 
 	/**
-	 * Create API HTTP request 
-	 * @return IRequest 
+	 * Create API HTTP request
+	 * @return IRequest
 	 */
 	public function createHttpRequest()
 	{
-		$request = $this->factory->createHttpRequest();
+		$request = $this->factory->fromGlobals();
 		$url = $request->getUrl();
-		$url->setQuery($request->getQuery());
 
 		return new Request(
-			$url, NULL, $request->getPost(), $request->getFiles(), $request->getCookies(), $request->getHeaders(),
+			$url, $request->getPost(), $request->getFiles(), $request->getCookies(), $request->getHeaders(),
 			$this->getPreferredMethod($request), $request->getRemoteAddress(), null,
 			function () use ($request) { return $request->getRawBody(); }
 		);
 	}
-
 	/**
-	 * Get prederred method 
-	 * @param  IRequest $request 
-	 * @return string            
+	 * Get prederred method
+	 * @param  IRequest $request
+	 * @return string
 	 */
 	protected function getPreferredMethod(IRequest $request)
 	{
