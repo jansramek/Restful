@@ -42,9 +42,9 @@ class ResourceRoute extends Route implements IResourceRouter
 		$this->actionDictionary = array();
 		if (isset($metadata['action']) && is_array($metadata['action'])) {
 			$this->actionDictionary = $metadata['action'];
-			$metadata['action'] = 'default';  
+			$metadata['action'] = 'default';
 		} else {
-			$action = isset($metadata['action']) ? $metadata['action'] : 'default'; 
+			$action = isset($metadata['action']) ? $metadata['action'] : 'default';
 			if (is_string($metadata)) {
 				$metadataParts = explode(':', $metadata);
 				$action = end($metadataParts);
@@ -113,26 +113,12 @@ class ResourceRoute extends Route implements IResourceRouter
 	 */
 	public function match(Http\IRequest $httpRequest): ?array
 	{
-		$appRequest = parent::match($httpRequest);
-		if (!$appRequest) {
+		$params = parent::match($httpRequest);
+		if ($params === null) {
 			return NULL;
 		}
 
-		// Check requested method
-		$methodFlag = $this->getMethod($httpRequest);
-		if (!$this->isMethod($methodFlag)) {
-			return NULL;
-		}
-
-		// If there is action dictionary, set method
-		if ($this->actionDictionary) {
-			$parameters = $appRequest->getParameters();
-			$parameters['action'] = $this->actionDictionary[$methodFlag];
-			$parameters['action'] = self::formatActionName($this->actionDictionary[$methodFlag], $parameters);
-			$appRequest->setParameters($parameters);
-		}
-
-		return $appRequest;
+		return $params;
 	}
 
 	/**
